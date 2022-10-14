@@ -1,55 +1,46 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 
-let born = false;
+const initXY ={
+  x: null,
+  y: null
+}
 
 function App() {
-  const [growth, setGrowth] = useState(0);
-  const [nirvana, setNirvana] = useState(false);
+  const [time, setTime] = useState(Date);
+const [xy, setXY] = useState(initXY);
 
-  // Runs on first render
   useEffect(()=>{
-    console.log("I am born")
-  }, []);
+    let handle = setInterval(()=>{
+      setTime(Date)
+    }, 1000);
 
-  // Runs on initial mount and every update
-  useEffect(()=>{
-    console.log("make mistake and learn")
-
-    if(growth > 70){
-      setNirvana(true);
-    }
-    return function cleanup(){
-      console.log("cleanup after mistakes");
+    //Cleanup after update
+    return () =>{
+      clearInterval(handle);
     }
   })
 
-  // Does not run on initial mount but DOES run on every update
-  useEffect(()=>{
-    if(born){
-      console.log("I am alive")
-    }else{
-      born = true
-    }
-  })
-
-  //Runs when Nirvana changes
-  useEffect(()=>{
-    if(born){
-      document.title = "Nirvana attained"
-    }
-  }, [nirvana])
-
-  const growHandle =() =>{
-    setGrowth(growth + 10)
+  function mousemoveHandle(e){
+    setXY({
+      x:e.clientX,
+      y:e.clientY
+    })
   }
+
+  useEffect(()=>{
+    window.addEventListener("mousemove", mousemoveHandle)
+    return () =>{
+      window.removeEventListener("mousemove", mousemoveHandle)
+    }
+  },)
 
   return (
     <div className="App">
       <header className="App-header">
-        <h2>Use Effect</h2>
-        <h3>growth: {growth}</h3>
-        <button onClick={growHandle}>Learn and grown</button>
+        <h2>Use Effect Examples</h2>
+        <h3>Date & Time : {time}</h3>
+        <h3>{`x: ${xy.x}, y:${xy.y}`}</h3>
       </header>
     </div>
   );
