@@ -1,46 +1,33 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 
-const initXY ={
-  x: null,
-  y: null
+const initProfile={
+  followers: null,
+  publicRepos: null
+}
+function App() {
+const [profile, setProfile] = useState(initProfile);
+
+async function getProfile(){
+  const response = await fetch('https://api.github.com/users/vanessabau');
+  const json = await response.json();
+
+  setProfile({
+    followers: json.followers,
+    publicRepos: json.public_repos
+  })
 }
 
-function App() {
-  const [time, setTime] = useState(Date);
-const [xy, setXY] = useState(initXY);
-
+// fetch data after page is mounted once
   useEffect(()=>{
-    let handle = setInterval(()=>{
-      setTime(Date)
-    }, 1000);
+    getProfile()
 
-    //Cleanup after update
-    return () =>{
-      clearInterval(handle);
-    }
-  })
-
-  function mousemoveHandle(e){
-    setXY({
-      x:e.clientX,
-      y:e.clientY
-    })
-  }
-
-  useEffect(()=>{
-    window.addEventListener("mousemove", mousemoveHandle)
-    return () =>{
-      window.removeEventListener("mousemove", mousemoveHandle)
-    }
-  },)
-
+}, [])
   return (
     <div className="App">
       <header className="App-header">
-        <h2>Use Effect Examples</h2>
-        <h3>Date & Time : {time}</h3>
-        <h3>{`x: ${xy.x}, y:${xy.y}`}</h3>
+        <h2>Fetch Data</h2>
+        <h3>{`followers: ${profile.followers}, repos: ${profile.publicRepos}`}</h3>
       </header>
     </div>
   );
