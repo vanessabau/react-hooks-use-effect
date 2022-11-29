@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState} from 'react';
 
 import './App.css';
 
@@ -9,7 +9,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h2></h2>
+        <h2>useLayoutEffect</h2>
+
       </header>
     </div>
   );
