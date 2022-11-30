@@ -3,10 +3,24 @@
 }
 
 ul{
-  list-style: none
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+}
+.li-style{
+  width: 200px;
+  border: 1px solid lightblue;
+  padding: 5px;
 }
 a{
   color: aqua;
+  text-decoration: none;
+}
+.login-button{
+  width: 100px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 0px;
 }
 
 .App-logo {
