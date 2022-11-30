@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+ul{
+  list-style: none
+}
+a{
+  color: aqua;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
